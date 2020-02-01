@@ -1,0 +1,34 @@
+server:
+  port: 1234
+logging:
+  level:
+    root: error
+    com.example.springbootstreamsquaredouble: debug
+spring:
+  kafka:
+    client-id: number-split
+    bootstrap-servers:
+      - localhost:9092
+#    template:
+#      default-topic: input-topic
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.LongSerializer
+    consumer:
+      group-id: random-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+    streams:
+      application-id: double-square
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+---
+kafka:
+  topic:
+    input: input-topic
+    even-output: square-output
+    odd-output: double-output
+    triple-input: triple-input
+    triple-output: triple-output
